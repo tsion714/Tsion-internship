@@ -103,6 +103,44 @@ const SkeletonLoader = () => (
     <div key={index} className="keen-slider__slide">
       <div className="px-1">
       <div
+            className="author_list_pp"
+            style={{   
+             backgroundColor: "#e0e0e0",
+             width: '40px',
+             height: '40px',
+             position: 'absolute',
+             borderRadius: '50%',
+             marginLeft: '10px',
+             marginTop: '2px',
+            opacity: 0.6
+            }}
+          /> 
+      <div
+            className="de_countdown"
+            style={{   
+             backgroundColor: "#e0e0e0",
+             width: '80px',
+             height: '30px',
+             position: 'absolute',
+             borderRadius: '30px',
+             right: '20px',
+            opacity: 0.6
+            }}
+          /> 
+      <div
+            className="nft__item img"
+            style={{   
+             backgroundColor: "#e0e0e0",
+             width: '100%',
+             height: 'auto',
+             borderRadius: '8px',
+             marginBottom: '10px',
+             position: 'relative',
+             overflow: 'hidden',
+            opacity: 0.6
+            }}
+          /> 
+      <div
             className="nft__item_wrap"
             style={{   
               backgroundColor: "#e0e0e0",
@@ -112,6 +150,18 @@ const SkeletonLoader = () => (
               opacity: 0.6
             }}
           /> 
+          <div
+              className="nft__item_info"
+              style={{
+                backgroundColor: "#e0e0e0",
+                height: "20px",
+                width: "190px",
+                borderRadius: "4px",
+                opacity: 0.6,
+                position: "relative",
+                overflow: "hidden",
+              }}
+           />
           </div>
           </div>
              ))
