@@ -1,5 +1,4 @@
 
-
 import React, { useEffect, useState } from "react";
 import { Link, useParams} from "react-router-dom";
 import axios from 'axios';
@@ -164,7 +163,9 @@ return (
                     </div>
                   </div>
                 </div>
+                <Link to={`/item-details/${item.nftId}`}>
                 <Link to="/item-details">
+
                   <img
                     src={item.nftImage}
                     className="lazy nft__item_preview"
@@ -173,7 +174,9 @@ return (
                 </Link>
               </div>
               <div className="nft__item_info">
+                <Link to={`/item-details/${item.nftId}`}>
                 <Link to="/item-details">
+
                   <h4>{items.authorName}</h4>
                 </Link>
                 <div className="nft__item_price">{item.price} ETH</div>
@@ -195,3 +198,4 @@ return (
 
 
 export default AuthorItems;
+
