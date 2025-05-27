@@ -20,17 +20,17 @@ const NewItems = () => {
         loop:true,
         slides: {perView: 1},
         breakpoints: {
-          "(min-width: 640px)": {
+          "(min-width: 576px)": {
             slides: {
               perView: 2,
             },
           },
-          "(min-width: 1024px)": {
+          "(min-width: 767px)": {
             slides: {
               perView: 3,
             },
           },
-          "(min-width: 1280px)": {
+          "(min-width: 1024px)": {
             slides: {
               perView: 4,
             },
@@ -46,9 +46,9 @@ const NewItems = () => {
 
 
       const handleResize = () => {
-        if (window.innerWidth >= 1280) setSlidesToShow(4);
-        else if (window.innerWidth >= 1024) setSlidesToShow(3);
-        else if (window.innerWidth >= 640) setSlidesToShow(2);
+        if (window.innerWidth >= 1024) setSlidesToShow(4);
+        else if (window.innerWidth >= 767) setSlidesToShow(3);
+        else if (window.innerWidth >= 576) setSlidesToShow(2);
         else setSlidesToShow(1);
       };
 
