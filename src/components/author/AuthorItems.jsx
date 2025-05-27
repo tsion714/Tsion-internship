@@ -188,9 +188,5 @@ return (
   </div>
 );
 };
-
-
-
-
 export default AuthorItems;
 
