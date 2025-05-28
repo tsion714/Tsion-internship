@@ -12,7 +12,6 @@ const HotCollections = () => {
     const [items, setItems] = useState([]);
     const [isSliderReady, setIsSliderReady] = useState(false);
     const [slidesToShow, setSlidesToShow] = useState(1);
-    const [shouldInit, setShouldInit] = useState(false);
 
       const [sliderRef, instanceRef] = useKeenSlider(
         {
