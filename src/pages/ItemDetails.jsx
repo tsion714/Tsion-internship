@@ -9,8 +9,8 @@ const ItemDetails = () => {
   const SkeletonLoader = ({ count = 1 }) => {
     return (
       <> 
-      {Array.from({ length: count }).map((_, i) => ( 
-  <div id="wrapper">
+      {Array.from({ length: count }).map((_, index) => ( 
+  <div key={index} id="wrapper">
   <div className="no-bottom no-top" id="content">
     <div id="top"></div>
     <section aria-label="section" className="mt90 sm-mt-0">

@@ -12,11 +12,11 @@ const HotCollections = () => {
     const [items, setItems] = useState([]);
     const [isSliderReady, setIsSliderReady] = useState(false);
     const [slidesToShow, setSlidesToShow] = useState(1);
+    const [shouldInit, setShouldInit] = useState(false);
 
       const [sliderRef, instanceRef] = useKeenSlider(
         {
           loop:true,
-          observer: true,
           slides: {perView: 1},
           breakpoints: {
             "(min-width: 640px)": {
@@ -44,39 +44,16 @@ const HotCollections = () => {
         },[]);
 
         const handleResize = () => {
-          const width = window.innerWidth;
-          const perView = width >= 1280 ? 4 : width >= 1024 ? 3 : width >= 640 ? 2 : 1;
-          instanceRef.current?.update();
+          if (window.innerWidth >= 1280) setSlidesToShow(4);
+          else if (window.innerWidth >= 1024) setSlidesToShow(3);
+          else if (window.innerWidth >= 640) setSlidesToShow(2);
+          else setSlidesToShow(1);
         };
 
         useEffect(() => {
-          window.scrollTo(0, 0);
           handleResize();
           window.addEventListener("resize", handleResize);
-        
-          const updateSlider = () => instanceRef.current?.update();
-        
-          const images = document.querySelectorAll(".keen-slider img");
-          let count = 0;
-        
-          images.forEach((img) => {
-            if (img.complete) count++;
-            else {
-              img.onload = img.onerror = () => {
-                count++;
-                if (count === images.length) updateSlider();
-              };
-            }
-          });
-        
-          if (count === images.length) updateSlider();
-        
-          const timeout = setTimeout(updateSlider, 300);
-        
-          return () => {
-            clearTimeout(timeout);
-            window.removeEventListener("resize", handleResize);
-          };
+          return () => window.removeEventListener("resize", handleResize);
         }, []);
 
         const goNext = () => {
@@ -91,7 +68,6 @@ const HotCollections = () => {
           }
         };       
 
-      
     useEffect(()=>{
       axios.get('https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections')
       .then(response => {
@@ -164,7 +140,7 @@ const HotCollections = () => {
             </div>
           </div>
           <div style ={{position: "relative"}}>
-          <div ref={sliderRef} className="keen-slider" >
+          <div ref={sliderRef} className="keen-slider">
           {items.length === 0 ? (
             <SkeletonLoader />
              ) : (items.map((item, index)=>(
