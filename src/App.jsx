@@ -31,11 +31,7 @@ function AppContent() {
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/author/:authorId" element={<Author />} />
-
         <Route path="/item-details/:nftId" element={<ItemDetails />} />
-
-        <Route path="/item-details" element={<ItemDetails />} />
-
       </Routes>
       <Footer />
     </>

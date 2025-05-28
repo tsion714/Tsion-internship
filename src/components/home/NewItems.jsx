@@ -20,17 +20,17 @@ const NewItems = () => {
         loop:true,
         slides: {perView: 1},
         breakpoints: {
-          "(min-width: 576px)": {
+          "(min-width: 640px)": {
             slides: {
               perView: 2,
             },
           },
-          "(min-width: 767px)": {
+          "(min-width: 1024px)": {
             slides: {
               perView: 3,
             },
           },
-          "(min-width: 1024px)": {
+          "(min-width: 1280px)": {
             slides: {
               perView: 4,
             },
@@ -45,18 +45,41 @@ const NewItems = () => {
       },[]);
 
 
-      const handleResize = () => {
-        if (window.innerWidth >= 1024) setSlidesToShow(4);
-        else if (window.innerWidth >= 767) setSlidesToShow(3);
-        else if (window.innerWidth >= 576) setSlidesToShow(2);
-        else setSlidesToShow(1);
-      };
+     const handleResize = () => {
+  const width = window.innerWidth;
+  const perView = width >= 1280 ? 4 : width >= 1024 ? 3 : width >= 640 ? 2 : 1;
+  instanceRef.current?.update();
+};
 
 
       useEffect(() => {
+        window.scrollTo(0, 0);
         handleResize();
         window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
+      
+        const updateSlider = () => instanceRef.current?.update();
+      
+        const images = document.querySelectorAll(".keen-slider img");
+        let count = 0;
+      
+        images.forEach((img) => {
+          if (img.complete) count++;
+          else {
+            img.onload = img.onerror = () => {
+              count++;
+              if (count === images.length) updateSlider();
+            };
+          }
+        });
+      
+        if (count === images.length) updateSlider();
+      
+        const timeout = setTimeout(updateSlider, 300);
+      
+        return () => {
+          clearTimeout(timeout);
+          window.removeEventListener("resize", handleResize);
+        };
       }, []);
 
 
@@ -79,7 +102,6 @@ const NewItems = () => {
       setItems(response.data);
     })
   },[]);
-
 
 useEffect(() => {
   const interval = setInterval(() => {
@@ -189,7 +211,7 @@ const SkeletonLoader = () => (
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link
-                    to="/author"
+                    to={`/author/${item.authorId}`}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="Creator: Monica Lucas"
@@ -222,7 +244,7 @@ const SkeletonLoader = () => (
                     </div>
                   </div>
 
-                  <Link to="/item-details">
+                  <Link to={`/item-details/${item.nftId}`}>
                     <img
                       src={item.nftImage}
                       className="lazy nft__item_preview"
@@ -231,7 +253,7 @@ const SkeletonLoader = () => (
                   </Link>
                 </div>
                 <div className="nft__item_info">
-                  <Link to="/item-details">
+                  <Link to={`/item-details/${item.nftId}`}>
                     <h4>{item.title}</h4>
                   </Link>
                   <div className="nft__item_price">{item.price} ETH</div>

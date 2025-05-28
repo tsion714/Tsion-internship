@@ -51,6 +51,7 @@ const SkeletonAuthor = () => (
  </div>
 );
 const Author = () => {
+  
  const { authorId } = useParams();
  const [items, setItems] = useState(null);
  const [isFollowing, setIsFollowing] = useState(false);
