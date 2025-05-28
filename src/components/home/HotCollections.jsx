@@ -14,7 +14,7 @@ const HotCollections = () => {
     const [slidesToShow, setSlidesToShow] = useState(1);
 
       const [sliderRef, instanceRef] = useKeenSlider(
-        {
+        items.length > 0 ? {
           loop:true,
           slides: {perView: 1},
           breakpoints: {
@@ -40,7 +40,13 @@ const HotCollections = () => {
           slideChanged(slider) {
               console.log('slide changed to', slider.track.details.rel);
           },
-        },[]);
+        } : null);
+
+         useEffect(() => {
+                if (instanceRef?.current) {
+                  setIsSliderReady(true);
+                }
+              }, [instanceRef]);
 
         const handleResize = () => {
           if (window.innerWidth >= 1280) setSlidesToShow(4);

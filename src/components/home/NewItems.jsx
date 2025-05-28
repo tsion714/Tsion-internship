@@ -15,35 +15,27 @@ const NewItems = () => {
   const [countdowns, setCountdowns] = useState([]);
 
 
-    const [sliderRef, instanceRef] = useKeenSlider(
-      {
-        loop:true,
-        slides: {perView: 1},
-        breakpoints: {
-          "(min-width: 640px)": {
-            slides: {
-              perView: 2,
-            },
+  const [sliderRef, instanceRef] = useKeenSlider(
+    items.length > 0
+      ? {
+          loop: true,
+          slides: { perView: 1 },
+          breakpoints: {
+            "(min-width: 640px)": { slides: { perView: 2 } },
+            "(min-width: 1024px)": { slides: { perView: 3 } },
+            "(min-width: 1280px)": { slides: { perView: 4 } },
           },
-          "(min-width: 1024px)": {
-            slides: {
-              perView: 3,
-            },
+          created: () => {
+            setIsSliderReady(true);
           },
-          "(min-width: 1280px)": {
-            slides: {
-              perView: 4,
-            },
-          },
-        },
-        created(slider) {
-          setIsSliderReady(true);
-        },
-        slideChanged(slider) {
-            console.log('slide changed to', slider.track.details.rel);
-        },
-      },[]);
+        }
+      : null );
 
+      useEffect(() => {
+        if (instanceRef?.current) {
+          setIsSliderReady(true);
+        }
+      }, [instanceRef]);
 
       const handleResize = () => {
         if (window.innerWidth >= 1280) setSlidesToShow(4);
@@ -61,17 +53,21 @@ const NewItems = () => {
 
 
       const goNext = () => {
-        if (isSliderReady && instanceRef.current) {
+        if (instanceRef?.current) {
           instanceRef.current.next();
+        } else {
+          console.log("Slider instance not ready yet");
         }
       };
-   
+      
       const goPrev = () => {
-        if (isSliderReady && instanceRef.current) {
+        if (instanceRef?.current) {
           instanceRef.current.prev();
+        } else {
+          console.log("Slider instance not ready yet");
         }
-      };      
-
+      };
+      
 
   useEffect(()=>{
     axios.get('https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems')
